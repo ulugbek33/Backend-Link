@@ -31,7 +31,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         servers = {
                 @Server(
-                        url = "http://localhost:9090",
+//                        url = "http://localhost:9090",
+                        url = "https://backend-link-iww6.onrender.com",
                         description = "Development-Server"
                 )
         }
