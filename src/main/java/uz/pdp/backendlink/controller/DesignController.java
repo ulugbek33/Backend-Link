@@ -15,6 +15,7 @@ import uz.pdp.backendlink.service.DesignService;
 @RestController
 @RequestMapping("/api/design")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class DesignController {
 
     private final DesignService designService;
