@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         if (username == null)
             throw new EntityNotFoundException("Invalid refresh token : " + refreshToken, HttpStatus.UNAUTHORIZED);
 
-        String accessToken = jwtService.generateToken(username, new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 3));
+        String accessToken = jwtService.generateToken(username, new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24));
 
         return new TokenDTO(accessToken, refreshToken);
     }
@@ -53,8 +53,8 @@ public class AuthServiceImpl implements AuthService {
         if (!matches)
             throw new PasswordIncorrectException("Invalid username or password : " + loginDTO.getUsername(), HttpStatus.BAD_REQUEST);
 
-        String accessToken = jwtService.generateToken(loginDTO.getUsername(), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 3));
-        String refreshToken = jwtService.generateToken(loginDTO.getUsername(), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12));
+        String accessToken = jwtService.generateToken(loginDTO.getUsername(), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24));
+        String refreshToken = jwtService.generateToken(loginDTO.getUsername(), new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24));
 
         return new TokenDTO(accessToken, refreshToken);
     }

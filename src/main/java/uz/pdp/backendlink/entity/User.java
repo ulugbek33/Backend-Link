@@ -1,5 +1,6 @@
 package uz.pdp.backendlink.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,6 +25,7 @@ public class User extends AbsLongEntity implements UserDetails {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String email;
