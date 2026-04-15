@@ -7,11 +7,13 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @MappedSuperclass
+@FieldNameConstants
 public abstract class AbsLongEntity {
 
     @Id

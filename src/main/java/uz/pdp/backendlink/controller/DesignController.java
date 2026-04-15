@@ -1,5 +1,7 @@
 package uz.pdp.backendlink.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -9,8 +11,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.backendlink.dto.DesignCreateDTO;
 import uz.pdp.backendlink.dto.DesignDTO;
+import uz.pdp.backendlink.dto.PageableDTO;
 import uz.pdp.backendlink.service.AttachmentService;
 import uz.pdp.backendlink.service.DesignService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/design")
@@ -20,6 +25,15 @@ public class DesignController {
 
     private final DesignService designService;
     private final AttachmentService attachmentService;
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping
+    public PageableDTO getDesign(@Parameter(description = "Page number", example = "0")
+                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                 @Parameter(description = "Page size", example = "10")
+                                 @RequestParam(value = "size", defaultValue = "10") int size) {
+        return designService.getAll(page, size);
+    }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/{id}")
@@ -43,6 +57,20 @@ public class DesignController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Xatolik: " + e.getMessage());
         }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public DesignDTO editDesign(@PathVariable Long id,
+                                @Valid @ModelAttribute DesignCreateDTO designCreateDTO) {
+        return designService.edit(id, designCreateDTO);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDesign(@PathVariable Long id) {
+        designService.delete(id);
+        return ResponseEntity.ok("Deleted design with id: " + id + " successfully!");
     }
 
 }

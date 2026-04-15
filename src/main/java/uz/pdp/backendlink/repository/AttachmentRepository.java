@@ -11,5 +11,4 @@ public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
         return findById(id).orElseThrow(() -> new EntityNotFoundException("Attachment not found with id: " + id, HttpStatus.NOT_FOUND));
     }
 
-    Long id(Long id);
 }
