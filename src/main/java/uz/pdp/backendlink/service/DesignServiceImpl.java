@@ -119,6 +119,17 @@ public class DesignServiceImpl implements DesignService {
     }
 
     @Override
+    public List<DesignDTO> getAdmin() {
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<Design> designs = designRepository.getByUser(user);
+
+        return designMapper.toDTO(designs);
+
+    }
+
+    @Override
     public DesignDTO getDesignById(Long id) {
 
         Design design = designRepository.getByIdOrThrow(id);

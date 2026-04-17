@@ -18,4 +18,7 @@ public interface DesignService {
     DesignDTO edit(Long id, DesignCreateDTO designCreateDTO);
 
     void delete(Long id);
+
+    List<DesignDTO> getAdmin();
+
 }

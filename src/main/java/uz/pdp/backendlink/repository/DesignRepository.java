@@ -9,6 +9,9 @@ import uz.pdp.backendlink.entity.Design;
 import uz.pdp.backendlink.entity.User;
 import uz.pdp.backendlink.exceptions.EntityNotFoundException;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface DesignRepository extends JpaRepository<Design, Long> {
 
     default Design getByIdOrThrow(Long id) {
@@ -17,4 +20,6 @@ public interface DesignRepository extends JpaRepository<Design, Long> {
     }
 
     Page<Design> findAllByUser(User user, Pageable pageable);
+
+    List<Design> getByUser(User user);
 }

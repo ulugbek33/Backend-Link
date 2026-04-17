@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uz.pdp.backendlink.enums.RoleEnum;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +24,7 @@ public class RegisterDTO {
             message = "Iltimos, haqiqiy email manzilini kiriting"
     )
     private String email;
+
+    private RoleEnum role;
+
 }

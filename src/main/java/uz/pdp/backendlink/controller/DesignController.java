@@ -26,6 +26,12 @@ public class DesignController {
     private final DesignService designService;
     private final AttachmentService attachmentService;
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/me")
+    public List<DesignDTO> getMe() {
+        return designService.getAdmin();
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping
     public PageableDTO getDesign(@Parameter(description = "Page number", example = "0")
