@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/design")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://tastelab-tawny.vercel.app"})
 public class DesignController {
 
     private final DesignService designService;

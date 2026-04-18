@@ -63,13 +63,13 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Frontend manzilingizga ruxsat beramiz
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://tastelab-tawny.vercel.app"));
 
         // Ruxsat berilgan metodlar
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
 
         // Ruxsat berilgan headerlar
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
 
         // Cookie yoki Auth headerlar bilan ishlash uchun
         configuration.setAllowCredentials(true);

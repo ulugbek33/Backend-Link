@@ -13,7 +13,7 @@ import uz.pdp.backendlink.service.UserService;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://tastelab-tawny.vercel.app"})
 public class UserController {
 
     private final UserService userService;
