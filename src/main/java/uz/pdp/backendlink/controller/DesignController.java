@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,6 +52,11 @@ public class DesignController {
     @GetMapping("/download/{id}")
     public ResponseEntity<Resource> download(@PathVariable Long id) {
         return attachmentService.download(id);
+    }
+
+    @GetMapping("/search")
+    public List<DesignDTO> search(@RequestParam String text) {
+        return designService.search(text);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

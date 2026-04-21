@@ -130,6 +130,14 @@ public class DesignServiceImpl implements DesignService {
     }
 
     @Override
+    public List<DesignDTO> search(String text) {
+
+        List<Design> designs = designRepository.searchDesigns(text);
+
+        return designMapper.toDTO(designs);
+    }
+
+    @Override
     public DesignDTO getDesignById(Long id) {
 
         Design design = designRepository.getByIdOrThrow(id);

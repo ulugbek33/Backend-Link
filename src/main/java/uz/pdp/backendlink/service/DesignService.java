@@ -1,6 +1,7 @@
 package uz.pdp.backendlink.service;
 
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import uz.pdp.backendlink.dto.DesignCreateDTO;
 import uz.pdp.backendlink.dto.DesignDTO;
 import uz.pdp.backendlink.dto.PageableDTO;
@@ -20,5 +21,7 @@ public interface DesignService {
     void delete(Long id);
 
     List<DesignDTO> getAdmin();
+
+    List<DesignDTO> search(String text);
 
 }
