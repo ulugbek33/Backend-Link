@@ -33,6 +33,6 @@ myapp:
   secret-key: ${SECRET_KEY}
   upload-path: ${UPLOAD_PATH}
 supabase:
-  url: https://mifkdttrorvlslbazpgq.supabase.co
-  key: sb_secret_oBXNqakfgmeYiHUfNzN9Zg_1H8hhFTU
+  url: ${SUPABASE_URL}
+  key: ${SUPABASE_KEY}
   bucket: designs
