@@ -3,7 +3,6 @@ package uz.pdp.backendlink.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -11,19 +10,17 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import uz.pdp.backendlink.dto.AttachmentDTO;
 import uz.pdp.backendlink.entity.Attachment;
-import uz.pdp.backendlink.exceptions.EntityNotFoundException;
+import uz.pdp.backendlink.entity.Design;
 import uz.pdp.backendlink.mapper.AttachmentMapper;
 import uz.pdp.backendlink.repository.AttachmentRepository;
+import uz.pdp.backendlink.repository.DesignRepository;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +28,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     private final AttachmentMapper attachmentMapper;
     private final AttachmentRepository attachmentRepository;
+    private final DesignRepository designRepository;
 
     @Value("${supabase.url}")
     private String supabaseUrl;
@@ -98,8 +96,6 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     public ResponseEntity<Resource> download(Long id) {
-        // Supabase-da rasmlar public URL orqali to'g'ridan-to'g'ri ochiladi.
-        // Agar sizga baribir yuklab olish (download) API-si kerak bo'lsa:
         Attachment attachment = attachmentRepository.getByIdOrThrow(id);
 
         try {
@@ -107,15 +103,36 @@ public class AttachmentServiceImpl implements AttachmentService {
             ByteArrayResource resource = new ByteArrayResource(fileBytes);
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginalFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + attachment.getOriginalFilename() + "\"")
                     .contentType(MediaType.parseMediaType(attachment.getContentType()))
+                    .contentLength(fileBytes.length)
                     .body(resource);
         } catch (Exception e) {
             throw new RuntimeException("Faylni yuklab olishda xatolik");
         }
     }
-}
 
+
+//    @Override
+//    public ResponseEntity<Resource> download(Long id) {
+//        // Supabase-da rasmlar public URL orqali to'g'ridan-to'g'ri ochiladi.
+//        // Agar sizga baribir yuklab olish (download) API-si kerak bo'lsa:
+//        Attachment attachment = attachmentRepository.getByIdOrThrow(id);
+//
+//        try {
+//            byte[] fileBytes = restTemplate.getForObject(attachment.getPath(), byte[].class);
+//            ByteArrayResource resource = new ByteArrayResource(fileBytes);
+//
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + attachment.getOriginalFilename() + "\"")
+//                    .contentType(MediaType.parseMediaType(attachment.getContentType()))
+//                    .body(resource);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Faylni yuklab olishda xatolik");
+//        }
+//    }
+
+}
 
 
 //
